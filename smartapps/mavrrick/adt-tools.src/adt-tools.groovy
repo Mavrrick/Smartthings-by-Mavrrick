@@ -48,11 +48,12 @@ preferences {
 	    input "water", "capability.waterSensor", title: "Look for ADT Activity on these water sesors", required: false, multiple: true
 		input "motion", "capability.motionSensor", title: "Look for ADT Activity on these motion sesors", required: false, multiple: true
         input "alarms", "capability.alarm", title: "Which Alarm(s) to trigger when ADT alarm goes off", multiple: true, required: false
-        input "alarmtype", "number", title: "What type of alarm do you want to trigger: 1=Siren, 2=Strobe, 3=Both", required: false, defaultValue: 3, options: [
+        input "alarmtype", "number", title: "What type of alarm do you want to trigger", required: false, defaultValue: 3, options: [
 			1:"Siren",
 			2:"Strobe",
 			3:"Both",
 		]
+        paragraph "Valid alarm types are 1= Siren, 2=Strobe, and 3=Both. All other numberical valudes wil be ignored"
         input "switches", "capability.switch", title: "Flash these lights (optional) when alarm is triggered", multiple: true, required: false
     }
     section("Flashing Lights setup (Optional)"){
