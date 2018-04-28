@@ -1,5 +1,5 @@
 /**
- *  ADT Alarm Action
+ *  ADT Door or Window Alert
  *
  *  Copyright 2018 CRAIG KING
  *
@@ -14,7 +14,7 @@
  *
  */
 definition(
-    name: "ADT Alarm Action",
+    name: "ADT Door or Window Alert",
     namespace: "Mavrrick",
     author: "CRAIG KING",
     description: "Smartthing ADT tools for additional functions ",
@@ -30,10 +30,7 @@ definition(
 */
 preferences {
 	    section("Use these devices when ADT Alarm is triggered"){
-		input "contact", "capability.contactSensor", title: "Look for ADT Activity on these contact sesors", required: false, multiple: true
-	    input "water", "capability.waterSensor", title: "Look for ADT Activity on these water sesors", required: false, multiple: true
-		input "motion", "capability.motionSensor", title: "Look for ADT Activity on these motion sesors", required: false, multiple: true
-		input "smoke", "capability.smokeDetector", title: "Look for ADT Activity on these smoke detectors", required: false, multiple: true
+		input "contact", "capability.contactSensor", title: "Look for ADT Activity on these contact sesors", required: true, multiple: true
 		}
         section("Action to trigger when ADT Alarm is triggered"){
         input "alarms", "capability.alarm", title: "Which Alarm(s) to trigger when ADT alarm goes off", multiple: true, required: false
@@ -92,12 +89,8 @@ switch (evt.value)
     default:
 	log.debug "Notify got alarm event ${evt}"
     log.debug "$evt.name:$evt.value, pushAndPhone:$pushAndPhone, '$msg'"
-        log.debug "The event id to be compared is ${evt.value}"  
-         log.debug "The event id to be compared is ${settings.water}" 
-          log.debug "The event id to be compared is ${settings.contact}" 
-           log.debug "The event id to be compared is ${settings.motion}" 
-           log.debug "The event id to be compared is ${settings.smoke}" 
-		def devices =  settings.water + settings.contacts + settings.motion + settings.smoke
+        log.debug "The event id to be compared is ${evt.value}"     
+		def devices = settings.contact
         log.debug "These devices were found ${devices.id} are being reviewed."
     	devices.findAll { it.id == evt.value } .each { 
         log.debug "Found device: ID: ${it.id}, Label: ${it.label}, Name: ${it.name}, Is water Event"
@@ -120,8 +113,8 @@ switch (evt.value)
         			log.debug "Alarm type ${alarmtype.value} detected"
                     break
                     }
-        }
-        flashLights()
+ 		flashLights()
+ 		}
 		break
 }
 }

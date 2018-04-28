@@ -47,7 +47,10 @@ preferences {
     page(name: "mainPage", title: "Tools", install: true, uninstall: true,submitOnChange: true) {
         section {
             app(name: "adtNotifier", appName: "ADT Notifier", namespace: "Mavrrick", title: "Create custom notification when alarm changes state", multiple: true)
-            app(name: "adtTriggeredAlarm", appName: "ADT Alarm Action", namespace: "Mavrrick", title: "Create new alarmed triggered event action", multiple: true)
+            app(name: "adtContactAlarm", appName: "ADT Door or Window Alert", namespace: "Mavrrick", title: "Create new Door or Window triggered event action", multiple: true)
+            app(name: "adtMotionAlarm", appName: "ADT Motion Alert", namespace: "Mavrrick", title: "Create new Motion triggered event action", multiple: true)
+            app(name: "adtSmokeAlarm", appName: "ADT Smoke Alert", namespace: "Mavrrick", title: "Create new Smoke triggered event action", multiple: true)
+            app(name: "adtWaterAlarm", appName: "ADT Water Alert", namespace: "Mavrrick", title: "Create new Water Leak triggered event action", multiple: true)
             }
     }
 }
