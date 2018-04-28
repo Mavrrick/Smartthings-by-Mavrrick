@@ -117,7 +117,8 @@ switch (evt.value)
         			log.debug "Alarm type ${alarmtype.value} detected"
                     break
                     }
-        }}
+        flashLights()}
+        }
 		else if (settings.contact != null) {
         def devices = settings.contact
         log.debug "These devices were found ${devices.id} are being reviewed."
@@ -142,7 +143,8 @@ switch (evt.value)
         			log.debug "Alarm type ${alarmtype.value} detected"
                     break
                     }
-        }}
+        flashLights()}
+        }
         else if (settings.motion != null) {
         def devices = settings.motion
         log.debug "These devices were found ${devices.id} are being reviewed."
@@ -167,7 +169,8 @@ switch (evt.value)
         			log.debug "Alarm type ${alarmtype.value} detected"
                     break
                     }
-        }}
+        flashLights()}
+        }
         else if (settings.smoke != null) {
         def devices = settings.smoke
         log.debug "These devices were found ${devices.id} are being reviewed."
@@ -192,8 +195,8 @@ switch (evt.value)
         			log.debug "Alarm type ${alarmtype.value} detected"
                     break
                     }
-		}}
-		flashLights()
+		flashLights()}
+		}
 		break
 }
 }
@@ -251,4 +254,3 @@ private flashLights() {
 		}
 	}
 }
-
