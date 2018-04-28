@@ -27,6 +27,7 @@ definition(
 *4/27/2018
 *Modified UI to use Child/parent Apps. New ADT notifier and ADT Alarm Action child apps required
 *Added ability for Alarm Action Child app to trigger based on ADT Smoke alarm
+*Corrected bug in Alarm Trigger that would cuase it fail when some sensors types were not configured
 *
 * 4/22/2018 v1.1.1
 *Cleaned up user interface a bit
