@@ -40,10 +40,10 @@ preferences {
         paragraph "Valid alarm types are 1= Siren, 2=Strobe, and 3=Both. All other numberical valudes wil be ignored"
         	input "alarmtype", "number", title: "What type of alarm do you want to trigger", required: false, defaultValue: 3
         paragraph "Valid Light actions are are 1 = None, 2 = Turn on lights, 3 = Flash Lights and 4 = Both. All other numberical valudes wil be ignored"
-        	input "lightaction", "number", title: "What type of light action do you want to trigger", required: false, defaultValue: 1
-        paragraph "If you choose Light action 3 do not select the same lights in both values"
-        	input "switches2", "capability.switch", title: "Turn these lights on", multiple: true, required: false
-        	input "switches", "capability.switch", title: "Flash these lights (optional) when alarm is triggered", multiple: true, required: false
+        	input "lightaction", "number", title: "What type of light action do you want to trigger", required: true, defaultValue: 1
+        paragraph "If you choose Light action 4 do not select the same lights in both values"
+        	input "switches2", "capability.switch", title: "Turn these lights on if Light action is set to 2 or 4", multiple: true, required: false
+        	input "switches", "capability.switch", title: "Flash these lights (optional) If Light action is set to 3 or 4", multiple: true, required: false
     	}
     	section("Flashing Lights setup (Optional)"){
 			input "onFor", "number", title: "On for (default 5000)", required: false
