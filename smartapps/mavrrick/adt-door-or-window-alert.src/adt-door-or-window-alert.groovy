@@ -25,29 +25,32 @@ definition(
     iconX3Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png")
 
 /* 
+* 4/29/2018 v1.0.1
+* Add Light Action to allow for Flashing and turing on lights
+*
 * Initial release v1.0.0
 * Trigger action based on ADT Alarm. This is intial release of child app
 */
 preferences {
 	    section("Use these devices when ADT Alarm is triggered"){
-		input "contact", "capability.contactSensor", title: "Look for ADT Activity on these contact sesors", required: true, multiple: true
+			input "contact", "capability.contactSensor", title: "Look for ADT Activity on these contact sesors", required: true, multiple: true
 		}
         section("Action to trigger when ADT Alarm is triggered"){
-        input "alarms", "capability.alarm", title: "Which Alarm(s) to trigger when ADT alarm goes off", multiple: true, required: false
-        input "alarmtype", "number", title: "What type of alarm do you want to trigger", required: false, defaultValue: 3, options: [
-			1:"Siren",
-			2:"Strobe",
-			3:"Both",
-		]
+        	input "alarms", "capability.alarm", title: "Which Alarm(s) to trigger when ADT alarm goes off", multiple: true, required: false
         paragraph "Valid alarm types are 1= Siren, 2=Strobe, and 3=Both. All other numberical valudes wil be ignored"
-        input "switches", "capability.switch", title: "Flash these lights (optional) when alarm is triggered", multiple: true, required: false
-    }
-    section("Flashing Lights setup (Optional)"){
+        	input "alarmtype", "number", title: "What type of alarm do you want to trigger", required: false, defaultValue: 3
+        paragraph "Valid Light actions are are 1 = None, 2 = Turn on lights, 3 = Flash Lights and 4 = Both. All other numberical valudes wil be ignored"
+        	input "lightaction", "number", title: "What type of light action do you want to trigger", required: false, defaultValue: 1
+        paragraph "If you choose Light action 3 do not select the same lights in both values"
+        	input "switches2", "capability.switch", title: "Turn these lights on", multiple: true, required: false
+        	input "switches", "capability.switch", title: "Flash these lights (optional) when alarm is triggered", multiple: true, required: false
+    	}
+    	section("Flashing Lights setup (Optional)"){
 		input "onFor", "number", title: "On for (default 5000)", required: false
 		input "offFor", "number", title: "Off for (default 5000)", required: false
         input "numFlashes", "number", title: "This number of times (default 3)", required: false
+		}
 	}
-}
 
 def installed() {
 	log.debug "Installed with settings: ${settings}"
@@ -113,7 +116,29 @@ switch (evt.value)
         			log.debug "Alarm type ${alarmtype.value} detected"
                     break
                     }
- 		flashLights()
+         switch (lightaction.value)
+        	{
+            	case 1 :
+                	log.debug "Light action ${lightaction.value} detected. No Light Action"                    
+                    break
+                case 2 :
+                	log.debug "Light action ${lightaction.value} detected. Turning on selected lights"
+                    switches2?.on()
+                    break
+                case 3 :
+                	log.debug "Light Action ${lightaction.value} detected. Flashing Selected lights"                    
+                    flashLights()
+                    break
+                case 4 :
+                	log.debug "Light Action ${lightaction.value} detected. Flash and turning on selected lights"
+                    switches2?.on()
+                    flashLights()
+                    break
+                default:
+					log.debug "Ignoring unexpected Light Action type."
+        			log.debug "Light Action ${lightaction.value} detected"
+                    break
+			} 		
  		}
 		break
 }
