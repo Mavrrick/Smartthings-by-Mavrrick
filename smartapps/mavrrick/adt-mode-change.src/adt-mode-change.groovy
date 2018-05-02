@@ -27,9 +27,9 @@ definition(
 
 preferences {
 	section("Select what button you want for each mode..."){
-        input "myDisarmButton", "capability.momentary", title: "Button?", required: false, multiple: false
-        input "myArmStay", "capability.momentary", title: "Button?", required: false, multiple: false
-        input "myArmAway", "capability.momentary", title: "Button?", required: false, multiple: false
+        input "myDisarmButton", "capability.momentary", title: "What Button will disarm the alarm?", required: false, multiple: false
+        input "myArmStay", "capability.momentary", title: "What button will put the alarm in Armed/Stay?", required: false, multiple: false
+        input "myArmAway", "capability.momentary", title: "What button will put the alarm in Armed/Away?", required: false, multiple: false
 	}
 /*    section("What mode do you want to set. 1 = Disarmed, 2 = Armed/Stay, 3 = Armed/Away..."){
 		input "alarmMode", "number", range: "1..3", title: "What Mode do you want to change into", required: true, defaultValue: 1
