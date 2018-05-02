@@ -26,14 +26,16 @@ definition(
 
 
 preferences {
-	section("When any of the following devices trigger..."){
-		input "mySwitch", "capability.switch", title: "Switch?", required: false, multiple: false
-        input "myButton", "capability.button", title: "Button?", required: false, multiple: false
+	section("Select what button you want for each mode..."){
+        input "myDisarmButton", "capability.momentary", title: "Button?", required: false, multiple: false
+        input "myArmStay", "capability.momentary", title: "Button?", required: false, multiple: false
+        input "myArmAway", "capability.momentary", title: "Button?", required: false, multiple: false
 	}
-    section("What mode do you want to set. 1 = Disarmed, 2 = Armed/Stay, 3 = Armed/Away..."){
+/*    section("What mode do you want to set. 1 = Disarmed, 2 = Armed/Stay, 3 = Armed/Away..."){
 		input "alarmMode", "number", range: "1..3", title: "What Mode do you want to change into", required: true, defaultValue: 1
 	}
-	section("Select your ADT Smart Panel..."){
+*/
+section("Select your ADT Smart Panel..."){
 		input "panel", "capability.battery", title: "ADT Panel?", required: true
 	}
 
@@ -53,54 +55,22 @@ def updated() {
 }
 
 def initialize() {
-	subscribe(mySwitch, "switch.on", switchOnHandler)   
-    subscribe(myButton, "button.pushed", buttonHandler)
+    subscribe(myDisarmButton, "momentary.pushed", disarmHandler)
+    subscribe(myArmStay, "momentary.pushed", armstayHandler)
+    subscribe(myArmAway, "momentary.pushed", armawayHandler)
 }
 
-def switchOnHandler(evt) {
-        switch (alarmMode.value)
-        	{
-            	case 1 :
-                	log.debug "Alarm mode ${alarmMode.value} detected. Disarming alarm"
-                    panel?.disarm()
-                    mySwitch?.off()
-                    break
-                case 2 :
-                	log.debug "Alarm mode ${alarmMode.value} detected. Changeing alarm to Alarm/Stay"
-                    panel?.armStay(armedStay)
-                    mySwitch?.off()
-                    break
-                case 3 :
-                	log.debug "Alarm mode ${alarmMode.value} detected. Changeing alarm to Alarm/Stay"
-                    panel?.armAway(armedAway)
-                    mySwitch?.off()
-                    break
-                default:
-					log.debug "Ignoring unexpected alarmmode mode."
-        			log.debug "Alarm mode ${alarmMode.value} detected"
-                    break
-                    }
-              }
+def disarmHandler(evt) {
+      log.debug "Disarming alarm"
+      panel?.disarm()
+	}
 
-
-def buttonHandler(evt) {
-        switch (alarmMode.value)
-        	{
-            	case 1 :
-                	log.debug "Alarm mode ${alarmMode.value} detected. Disarming alarm"
-                    panel?.disarm()
-                    break
-                case 2 :
-                	log.debug "Alarm mode ${alarmMode.value} detected. Changeing alarm to Alarm/Stay"
-                    panel?.armStay(armedStay)
-                    break
-                case 3 :
-                	log.debug "Alarm mode ${alarmMode.value} detected. Changeing alarm to Alarm/Stay"
-                    panel?.armAway(armedAway)
-                    break
-                default:
-					log.debug "Ignoring unexpected alarmmode mode."
-        			log.debug "Alarm mode ${alarmMode.value} detected"
-                    break
-                    }
-              }
+def armstayHandler(evt) {
+       log.debug "Changeing alarm to Alarm/Stay"
+       panel?.armStay(armedStay)
+	}
+    
+def armawayHandler(evt) {
+       log.debug "Changeing alarm to Alarm/Stay"
+       panel?.armStay(armedStay)
+	   }
