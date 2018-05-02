@@ -24,6 +24,9 @@ definition(
     iconX3Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png")
 
 /* 
+*5/1/2018
+*Added new child app to allow for changing the ADT Panel Alarm Mode from Smarthings
+*
 *4/27/2018
 *Modified UI to use Child/parent Apps. New Child apps are required to trigger items from alarm.
 *Added child app to trigger based on ADT Smoke alarm
@@ -51,6 +54,7 @@ preferences {
             app(name: "adtMotionAlarm", appName: "ADT Motion Alert", namespace: "Mavrrick", title: "Create new Motion triggered event action", multiple: true)
             app(name: "adtSmokeAlarm", appName: "ADT Smoke Alert", namespace: "Mavrrick", title: "Create new Smoke triggered event action", multiple: true)
             app(name: "adtWaterAlarm", appName: "ADT Water Alert", namespace: "Mavrrick", title: "Create new Water Leak triggered event action", multiple: true)
+            app(name: "adtModeChange", appName: "ADT Mode Change", namespace: "Mavrrick", title: "Allows changing alarm mode from smartapps", multiple: true)            
             }
     }
 }
