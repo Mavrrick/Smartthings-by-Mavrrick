@@ -71,6 +71,6 @@ def armstayHandler(evt) {
 	}
     
 def armawayHandler(evt) {
-       log.debug "Changeing alarm to Alarm/Stay"
-       panel?.armStay(armedStay)
+       log.debug "Changeing alarm to Alarm/Away"
+       panel?.armAway(armedAway)
 	   }
