@@ -18,7 +18,7 @@ definition(
     namespace: "Mavrrick",
     author: "CRAIG KING",
     description: "ADT Child app to change modes.",
-    category: "My Apps",
+    category: "Safety & Security",
     parent: "Mavrrick:ADT Tools",
     iconUrl: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
     iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png",
@@ -60,6 +60,8 @@ def initialize() {
     subscribe(myArmAway, "momentary.pushed", armawayHandler)
 }
 
+
+
 def disarmHandler(evt) {
       log.debug "Disarming alarm"
       panel?.disarm()
@@ -67,10 +69,21 @@ def disarmHandler(evt) {
 
 def armstayHandler(evt) {
        log.debug "Changeing alarm to Alarm/Stay"
-       panel?.armStay(armedStay)
+       def alarmState = panel.currentSecuritySystemStatus
+        if (alarmState == "armedAway") {
+        	log.debug "Current alarm mode: ${alarmState}. Alarm must be in Disarmed state before chaing state"
+        }
+        else {       
+        panel?.armStay(armedStay)
+        }
 	}
     
 def armawayHandler(evt) {
-       log.debug "Changeing alarm to Alarm/Away"
-       panel?.armAway(armedAway)
+       	log.debug "Changeing alarm to Alarm/Away"
+        def alarmState = panel.currentSecuritySystemStatus
+        if (alarmState == "armedStay") {
+        	log.debug "Current alarm mode: ${alarmState}. Alarm must be in Disarmed state before chaing state"
+        }
+        else {
+      	panel?.armAway(armedAway)}
 	   }
