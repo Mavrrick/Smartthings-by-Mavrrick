@@ -34,7 +34,7 @@ preferences {
 		paragraph "What Active alarm mode do you want to monitor for 1= Arm/Stay, 2=Armed/Away. All other numberical valudes wil be ignored"
         	input "alarmtype2", "number", title: "What type of alarm do you want to trigger", required: false, defaultValue: 1        
         	input "motion", "capability.motionSensor", title: "Motion Sensor?", required: false , multiple: true
-			input "contact", "capability.contactSensor", title: "Door or Window Sensor?", required: true, multiple: true
+			input "contact", "capability.contactSensor", title: "Door or Window Sensor?", required: false, multiple: true
 		}
 		section("Select your ADT Smart Panel..."){
 		input "panel", "capability.battery", title: "ADT Panel?", required: true
