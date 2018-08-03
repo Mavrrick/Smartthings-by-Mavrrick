@@ -21,9 +21,14 @@ definition(
     category: "Safety & Security",
     iconUrl: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
     iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png",
-    iconX3Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png")
+    iconX3Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png",
+    singleInstance: true)
 
 /* 
+*
+*7/20/2018
+*Updates to UI and to include ADT Alert Any Sensor child app
+*
 *5/1/2018
 *Added new child app to allow for changing the ADT Panel Alarm Mode from Smarthings
 *
@@ -48,13 +53,15 @@ definition(
 preferences {
     // The parent app preferences are pretty simple: just use the app input for the child app.
     page(name: "mainPage", title: "Tools", install: true, uninstall: true,submitOnChange: true) {
-        section {
+        section ("ADT Integration Apps"){
             app(name: "adtNotifier", appName: "ADT Notifier", namespace: "Mavrrick", title: "Create custom notification when alarm changes state", multiple: true)
+            app(name: "adtModeChange", appName: "ADT Mode Change", namespace: "Mavrrick", title: "Allows changing alarm mode from smartapps", multiple: true)            
+            }
+        section ("Alarm Event Action Apps"){
             app(name: "adtContactAlarm", appName: "ADT Door or Window Alert", namespace: "Mavrrick", title: "Create new Door or Window triggered event action", multiple: true)
             app(name: "adtMotionAlarm", appName: "ADT Motion Alert", namespace: "Mavrrick", title: "Create new Motion triggered event action", multiple: true)
             app(name: "adtSmokeAlarm", appName: "ADT Smoke Alert", namespace: "Mavrrick", title: "Create new Smoke triggered event action", multiple: true)
             app(name: "adtWaterAlarm", appName: "ADT Water Alert", namespace: "Mavrrick", title: "Create new Water Leak triggered event action", multiple: true)
-            app(name: "adtModeChange", appName: "ADT Mode Change", namespace: "Mavrrick", title: "Allows changing alarm mode from smartapps", multiple: true)            
             app(name: "adtAnySensor", appName: "ADT Alert Any Sensor", namespace: "Mavrrick", title: "Allows Unmonitored Alarm action based on ADT status", multiple: true)            
             }
     }
