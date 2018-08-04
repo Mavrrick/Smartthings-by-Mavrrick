@@ -1,0 +1,107 @@
+{
+    "namespace": "Mavrrick",
+    "repoOwner": "Mavrrick",
+    "repoName": "Smartthings-by-Mavrrick",
+    "repoBranch": "master",
+    "name": "ADT Tools",
+    "author": "Craig K.",
+    "description": "Integration tools for the ADT Smartthings panel.",
+    "category": "Safety & Security",
+    "bannerUrl": "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
+    "forumUrl": "https://community.smartthings.com/t/released-adt-tools-for-smartthings-adt-alarm-sytsems/",
+    "docUrl": "http://thingsthataresmart.wiki/index.php?title=ADT_tools",
+    "releaseType": "production",
+    "keywords": [
+        "adt",
+        "adt tools",
+
+    ],
+    "notes": "Nothing to show here (yet)",
+    "smartApps": {
+        "parent": {
+            "name": "ADT Tools",
+            "iconUrl": "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
+            "published": true,
+            "oAuth": false,
+            "version": "1.1.3",
+            "appSettings": {
+                "clientId": "",
+                "clientSecret": "",
+                "devOpt": "false"
+            },
+            "appUrl": "Smartthings-by-Mavrrick/smartapps/mavrrick/adt-tools.src/adt-tools.groovy"
+        },
+        "children": [{
+            "name": "ADT Notifier",
+            "iconUrl": "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
+            "published": false,
+            "oAuth": false,
+            "version": "1.0.0",
+            "appSettings": {},
+            "appUrl": "Smartthings-by-Mavrrick/smartapps/mavrrick/adt-notifier.src/adt-notifier.groovy",
+            "optional": false
+	},
+	{
+	"name": "ADT Mode Change",
+            "iconUrl": "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
+            "published": false,
+            "oAuth": false,
+            "version": "1.0.0",
+            "appSettings": {},
+            "appUrl": "Smartthings-by-Mavrrick/smartapps/mavrrick/adt-mode-change.src/adt-mode-change.groovy",
+            "optional": false
+	},
+	{
+	"name": "ADT Door or Window Alert",
+            "iconUrl": "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
+            "published": false,
+            "oAuth": false,
+            "version": "1.0.1",
+            "appSettings": {},
+            "appUrl": "Smartthings-by-Mavrrick/smartapps/mavrrick/adt-door-or-window-alert.src/adt-door-or-window-alert.groovy",
+            "optional": false
+	},
+	{
+	"name": "ADT Motion Alert",
+            "iconUrl": "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
+            "published": false,
+            "oAuth": false,
+            "version": "1.0.1",
+            "appSettings": {},
+            "appUrl": "Smartthings-by-Mavrrick/smartapps/mavrrick/adt-motion-alert.src/adt-motion-alert.groovy",
+            "optional": false
+	},
+	{
+	"name": "ADT Smoke Alert",
+            "iconUrl": "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
+            "published": false,
+            "oAuth": false,
+            "version": "1.0.1",
+            "appSettings": {},
+            "appUrl": "Smartthings-by-Mavrrick/smartapps/mavrrick/adt-smoke-alert.src/adt-smoke-alert.groovy",
+            "optional": false
+	},
+	{
+	"name": "ADT Water Alert",
+            "iconUrl": "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
+            "published": false,
+            "oAuth": false,
+            "version": "1.0.1",
+            "appSettings": {},
+            "appUrl": "Smartthings-by-Mavrrick/smartapps/mavrrick/adt-water-alert.src/adt-water-alert.groovy",
+            "optional": false
+	},
+	{
+	"name": "ADT Alert Any Sensor",
+            "iconUrl": "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
+            "published": false,
+            "oAuth": false,
+            "version": "1.0.0",
+            "appSettings": {},
+            "appUrl": "Smartthings-by-Mavrrick/smartapps/mavrrick/adt-alert-any-sensor.src/adt-alert-any-sensor.groovy",
+            "optional": false
+
+        }]
+    },
+
+}
