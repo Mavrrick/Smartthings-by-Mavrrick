@@ -28,6 +28,10 @@ definition(
 *
 * Initial release v1.0.0
 * Trigger action based on ADT Alarm. This is intial release of child app
+* 
+* 8/6/2018 1.0.1
+* Changed Trigger to be activated with the hub alarm state is in a armed mode
+*
 */
 preferences {
 	    section("Monitor these devices for activity when alarm is armed"){
@@ -99,12 +103,13 @@ def alarmHandler(evt) {
 }
 
 def triggerHandler(evt) {
-       def alarmState = panel.currentSecuritySystemStatus
-         if (alarmState == "armedStay" && alarmtype2 == 1) {
+/*        def alarmState = panel.currentSecuritySystemStatus  */
+        def alarmState = location.currentState("alarmSystemStatus")?.value
+		if (alarmState == "stay" && alarmtype2 == 1) {
         log.debug "Current alarm mode: ${alarmState}."
         alarmAction()
         }
-        else if (alarmState == "armedAway" && alarmtype2 == 2) {
+        else if (alarmState == "away" && alarmtype2 == 2) {
         log.debug "Current alarm mode: ${alarmState}."
         alarmAction()
         }

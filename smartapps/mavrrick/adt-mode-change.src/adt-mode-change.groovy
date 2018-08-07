@@ -13,6 +13,13 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  */
+ /**
+ 8/06/18 1.0.1
+ Added ability to control location alarm status in Smartthings. This will allow more integration with SHM type components
+ Added the ability to create a delay when activating the location alarm state. This will be used to enable delayed arming 
+ when using non monitored sensors. Will be required for ADT Any Sensor app to function.
+ */
+ 
 definition(
     name: "ADT Mode Change",
     namespace: "Mavrrick",
@@ -31,10 +38,10 @@ preferences {
         input "myArmStay", "capability.momentary", title: "What button will put the alarm in Armed/Stay?", required: false, multiple: false
         input "myArmAway", "capability.momentary", title: "What button will put the alarm in Armed/Away?", required: false, multiple: false
 	}
-/*    section("What mode do you want to set. 1 = Disarmed, 2 = Armed/Stay, 3 = Armed/Away..."){
-		input "alarmMode", "number", range: "1..3", title: "What Mode do you want to change into", required: true, defaultValue: 1
+   section("Delay for alarm Hub alarm activation..."){
+		input "delay", "number", range: "1..120", title: "Please specify your Alarm Delay", required: true, defaultValue: 0
 	}
-*/
+    
 section("Select your ADT Smart Panel..."){
 		input "panel", "capability.battery", title: "ADT Panel?", required: true
 	}
@@ -58,6 +65,7 @@ def initialize() {
     subscribe(myDisarmButton, "momentary.pushed", disarmHandler)
     subscribe(myArmStay, "momentary.pushed", armstayHandler)
     subscribe(myArmAway, "momentary.pushed", armawayHandler)
+    subscribe(location, "securitySystemStatus", alarmModeHandler)
 }
 
 
@@ -75,6 +83,7 @@ def armstayHandler(evt) {
         }
         else {       
         panel?.armStay(armedStay)
+
         }
 	}
     
@@ -87,3 +96,34 @@ def armawayHandler(evt) {
         else {
       	panel?.armAway(armedAway)}
 	   }
+       
+def alarmModeHandler(evt) {
+	switch (evt.value)
+        	{
+            	case "armedAway":
+        			runIn(delay, armawaySHMHandler)
+                    break
+                case "armedStay":
+                	log.debug "Attempting change of Hub alarm Mode"
+        			runIn(delay, armstaySHMHandler)
+                    break
+                case "disarmed" :
+                     sendLocationEvent(name: "alarmSystemStatus", value: "off")
+                    break
+                default:
+					log.debug "Ignoring unexpected alarmtype mode."
+        			log.debug "Unexpected value for Alarm status"
+                    break
+                    }
+         }
+
+def armstaySHMHandler() {
+       	log.debug "Changeing HUB alarm state to Armed/Stay"
+        sendLocationEvent(name: "alarmSystemStatus", value: "stay")
+	   }
+       
+def armawaySHMHandler() {
+       	log.debug "Changeing HUB alarm state to Alarm/Away"
+        sendLocationEvent(name: "alarmSystemStatus", value: "away")
+	   } 
+ 
