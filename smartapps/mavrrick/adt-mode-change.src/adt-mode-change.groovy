@@ -79,7 +79,7 @@ def armstayHandler(evt) {
        log.debug "Changeing alarm to Alarm/Stay"
        def alarmState = panel.currentSecuritySystemStatus
         if (alarmState == "armedAway") {
-        	log.debug "Current alarm mode: ${alarmState}. Alarm must be in Disarmed state before chaing state"
+        	log.debug "Current alarm mode: ${alarmState}. Alarm must be in Disarmed state before changeing state"
         }
         else {       
         panel?.armStay(armedStay)
@@ -91,7 +91,7 @@ def armawayHandler(evt) {
        	log.debug "Changeing alarm to Alarm/Away"
         def alarmState = panel.currentSecuritySystemStatus
         if (alarmState == "armedStay") {
-        	log.debug "Current alarm mode: ${alarmState}. Alarm must be in Disarmed state before chaing state"
+        	log.debug "Current alarm mode: ${alarmState}. Alarm must be in Disarmed state before changeing state"
         }
         else {
       	panel?.armAway(armedAway)}
@@ -108,7 +108,7 @@ def alarmModeHandler(evt) {
         			runIn(delay, armstaySHMHandler)
                     break
                 case "disarmed" :
-                     sendLocationEvent(name: "alarmSystemStatus", value: "off")
+                    sendLocationEvent(name: "alarmSystemStatus", value: "off")
                     break
                 default:
 					log.debug "Ignoring unexpected alarmtype mode."

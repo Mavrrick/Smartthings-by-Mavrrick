@@ -32,7 +32,11 @@ definition(
 * 8/6/2018 1.0.1
 * Changed Trigger to be activated with the hub alarm state is in a armed mode
 *
+* 9/23/2018 1.0.2
+* Added Camera rotine and parameters to enable cameras during alarm event.
 */
+import groovy.time.TimeCategory
+
 preferences {
 	    section("Monitor these devices for activity when alarm is armed"){
 		paragraph "What Active alarm mode do you want to monitor for 1= Arm/Stay, 2=Armed/Away. All other numberical valudes wil be ignored"
@@ -52,7 +56,13 @@ preferences {
         paragraph "If you choose Light action 4 do not select the same lights in both values"
         	input "switches2", "capability.switch", title: "Turn these lights on if Light action is set to 2 or 4", multiple: true, required: false
         	input "switches", "capability.switch", title: "Flash these lights (optional) If Light action is set to 3 or 4", multiple: true, required: false
-    	}
+			input "recordCameras", "bool", title: "Enable Camera recording?", description: "This switch will enable cameras to record on alarm events.", defaultValue: false, required: true, multiple: false
+			input "recordRepeat", "bool", title: "Enable Camare to trigger recording as long as arlarm is occuring?", description: "This switch will enable cameras generate new clips as long as thre is a active alarm.", defaultValue: false, required: true, multiple: false
+			}
+    	section("Camera setup (Optional)"){
+		input "cameras", "capability.videoCapture", multiple: true, required: false
+        input name: "clipLength", type: "number", title: "Clip Length", description: "Please enter the length of each recording", required: true, range: "5..120", defaultValue: 120
+        }
     	section("Flashing Lights setup (Optional)"){
 		input "onFor", "number", title: "On for (default 5000)", required: false
 		input "offFor", "number", title: "Off for (default 5000)", required: false
@@ -107,7 +117,7 @@ def triggerHandler(evt) {
         def alarmState = location.currentState("alarmSystemStatus")?.value
 		if (alarmState == "stay" && alarmtype2 == 1) {
         log.debug "Current alarm mode: ${alarmState}."
-        alarmAction()
+		alarmAction()
         }
         else if (alarmState == "away" && alarmtype2 == 2) {
         log.debug "Current alarm mode: ${alarmState}."
@@ -169,6 +179,10 @@ def alarmAction()
                     break
 			} 		
 sendnotification()
+	if (settings.recordCameras)
+	{
+		cameraRecord()
+	}
 }
 
 
@@ -263,3 +277,29 @@ def msg = message
 	}
 }
 }
+
+def cameraRecord() {	
+	log.debug "Refreshing cameras with ${clipLength} second capture"
+    Date start = new Date()
+    Date end = new Date()
+    use( TimeCategory ) {
+    	end = start + clipLength.seconds
+ 	} 
+    log.debug "Capturing..."
+    cameras.capture(start, start, end)
+    	if (settings.recordRepeat)
+	{
+		runIn(clipLength, cameraRepeatChk)
+	}
+}
+
+def cameraRepeatChk() {
+	def alarmActive = alarms.currentAlarm
+    	log.debug "Current alarms is in ${alarmActive} state"
+		if (alarmActive != "[off]") {
+        cameraRecord()
+        }
+		else {
+        log.debug "Alarm has cleared and is no longer active recordings are stoping."
+		}
+        }
