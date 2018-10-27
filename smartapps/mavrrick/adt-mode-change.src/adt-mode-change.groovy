@@ -14,6 +14,10 @@
  *
  */
  /**
+ 10/27/2018
+ Added ability to turn on and off the ability to keep the ADT Status and the Location Alam state in the same status.
+ Updated test to better describe certain settings.
+ 
  8/06/18 1.0.1
  Added ability to control location alarm status in Smartthings. This will allow more integration with SHM type components
  Added the ability to create a delay when activating the location alarm state. This will be used to enable delayed arming 
@@ -38,7 +42,8 @@ preferences {
         input "myArmStay", "capability.momentary", title: "What button will put the alarm in Armed/Stay?", required: false, multiple: false
         input "myArmAway", "capability.momentary", title: "What button will put the alarm in Armed/Away?", required: false, multiple: false
 	}
-   section("Delay for alarm Hub alarm activation..."){
+   section("Smartthings location alarm state setup. These must be configured to use the Any Sensory Child App."){
+   		input "locAlarmSync", "bool", title: "Maintain synchronization between Smartthings ADT alarm panel and location clound alarm state", description: "This switch will tell ADT Tools if it needs to kep the ADT Alarm and the Smarthings location alarm status in sync.", defaultValue: false, required: true, multiple: false
 		input "delay", "number", range: "1..120", title: "Please specify your Alarm Delay", required: true, defaultValue: 0
 	}
     
@@ -65,7 +70,10 @@ def initialize() {
     subscribe(myDisarmButton, "momentary.pushed", disarmHandler)
     subscribe(myArmStay, "momentary.pushed", armstayHandler)
     subscribe(myArmAway, "momentary.pushed", armawayHandler)
-    subscribe(location, "securitySystemStatus", alarmModeHandler)
+    if (settings.locAlarmSync) 
+		{
+    	subscribe(location, "securitySystemStatus", alarmModeHandler)
+        }
 }
 
 
@@ -105,7 +113,7 @@ def alarmModeHandler(evt) {
                     break
                 case "armedStay":
                 	log.debug "Attempting change of Hub alarm Mode"
-        			runIn(delay, armstaySHMHandler)
+                    runIn(delay, armstaySHMHandler)
                     break
                 case "disarmed" :
                     sendLocationEvent(name: "alarmSystemStatus", value: "off")

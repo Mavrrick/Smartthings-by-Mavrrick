@@ -25,6 +25,8 @@ definition(
     singleInstance: true)
 
 /* 
+*10/27/2018
+*Removed some commented code for the camera integration
 *
 *7/20/2018
 *Updates to UI and to include ADT Alert Any Sensor child app
@@ -63,7 +65,6 @@ preferences {
             app(name: "adtSmokeAlarm", appName: "ADT Smoke Alert", namespace: "Mavrrick", title: "Create new Smoke triggered event action", multiple: true)
             app(name: "adtWaterAlarm", appName: "ADT Water Alert", namespace: "Mavrrick", title: "Create new Water Leak triggered event action", multiple: true)
             app(name: "adtAnySensor", appName: "ADT Alert Any Sensor", namespace: "Mavrrick", title: "Allows Unmonitored Alarm action based on ADT status", multiple: true)            
-/*			app(name: "adtArloIFTT", appName: "Arlo Trigger integration", namespace: "Mavrrick", title: "Allows Arlo Integration with IFTTT", multiple: true)  */
 		}
     }
 }

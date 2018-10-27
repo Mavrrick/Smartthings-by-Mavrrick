@@ -25,15 +25,20 @@ definition(
     iconX3Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png")
 
 /* 
+* 10/27/2018 1.0.3
+* Added command to set dimmer lights to 100% when just being turned on. 
+* Updadated record check routine to look at panel for current state.
+* Camera recording can not be set to repeat during a alarm event.
+*
+* 9/23/2018 1.0.2
+* Added Camera rotine and parameters to enable cameras during alarm event.
+*
+* 8/6/2018 1.0.1
+* Changed Trigger to be activated with the hub alarm state is in a armed mode
 *
 * Initial release v1.0.0
 * Trigger action based on ADT Alarm. This is intial release of child app
 * 
-* 8/6/2018 1.0.1
-* Changed Trigger to be activated with the hub alarm state is in a armed mode
-*
-* 9/23/2018 1.0.2
-* Added Camera rotine and parameters to enable cameras during alarm event.
 */
 import groovy.time.TimeCategory
 
@@ -56,12 +61,12 @@ preferences {
         paragraph "If you choose Light action 4 do not select the same lights in both values"
         	input "switches2", "capability.switch", title: "Turn these lights on if Light action is set to 2 or 4", multiple: true, required: false
         	input "switches", "capability.switch", title: "Flash these lights (optional) If Light action is set to 3 or 4", multiple: true, required: false
-			input "recordCameras", "bool", title: "Enable Camera recording?", description: "This switch will enable cameras to record on alarm events.", defaultValue: false, required: true, multiple: false
-			input "recordRepeat", "bool", title: "Enable Camare to trigger recording as long as arlarm is occuring?", description: "This switch will enable cameras generate new clips as long as thre is a active alarm.", defaultValue: false, required: true, multiple: false
 			}
     	section("Camera setup (Optional)"){
-		input "cameras", "capability.videoCapture", multiple: true, required: false
-        input name: "clipLength", type: "number", title: "Clip Length", description: "Please enter the length of each recording", required: true, range: "5..120", defaultValue: 120
+        	input "recordCameras", "bool", title: "Enable Camera recording?", description: "This switch will enable cameras to record on alarm events.", defaultValue: false, required: true, multiple: false
+			input "recordRepeat", "bool", title: "Enable Camare to trigger recording as long as arlarm is occuring?", description: "This switch will enable cameras generate new clips as long as thre is a active alarm.", defaultValue: false, required: true, multiple: false
+			input "cameras", "capability.videoCapture", multiple: true, required: false
+        	input name: "clipLength", type: "number", title: "Clip Length", description: "Please enter the length of each recording", required: true, range: "5..120", defaultValue: 120
         }
     	section("Flashing Lights setup (Optional)"){
 		input "onFor", "number", title: "On for (default 5000)", required: false
@@ -163,6 +168,7 @@ def alarmAction()
                 case 2 :
                 	log.debug "Light action ${lightaction.value} detected. Turning on selected lights"
                     switches2?.on()
+                    switches2?.setLevel(100)
                     break
                 case 3 :
                 	log.debug "Light Action ${lightaction.value} detected. Flashing Selected lights"                    
@@ -171,6 +177,7 @@ def alarmAction()
                 case 4 :
                 	log.debug "Light Action ${lightaction.value} detected. Flash and turning on selected lights"
                     switches2?.on()
+                    switches2?.setLevel(100)
                     flashLights()
                     break
                 default:
@@ -294,11 +301,13 @@ def cameraRecord() {
 }
 
 def cameraRepeatChk() {
-	def alarmActive = alarms.currentAlarm
+		def alarmActive = panel.currentSecuritySystemStatus
     	log.debug "Current alarms is in ${alarmActive} state"
-		if (alarmActive != "[off]") {
-        cameraRecord()
-        }
+		if (alarmActive != "disarmed") 
+        	{
+        	log.debug "Alarm Event is still occuring. Submitting another clip to record"
+        cameraRecord()   
+        	}
 		else {
         log.debug "Alarm has cleared and is no longer active recordings are stoping."
 		}
