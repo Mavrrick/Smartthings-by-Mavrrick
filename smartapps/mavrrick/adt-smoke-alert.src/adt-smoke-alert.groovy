@@ -37,6 +37,8 @@ definition(
 * Initial release v1.0.0
 * Trigger action based on ADT Alarm. This is intial release of child app
 */
+import groovy.time.TimeCategory
+
 preferences {
 	    section("Use these devices when ADT Alarm is triggered"){
 			input "smoke", "capability.smokeDetector", title: "Look for ADT Activity on these smoke detectors", required: true, multiple: true

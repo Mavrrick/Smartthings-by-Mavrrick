@@ -37,6 +37,8 @@ definition(
 * Initial release v1.0.0
 * Trigger action based on ADT Alarm. This is intial release of child app
 */
+import groovy.time.TimeCategory
+
 preferences {
 	    section("Use these devices when ADT Alarm is triggered"){
 			input "motion", "capability.motionSensor", title: "Look for ADT Activity on these motion sesors", required: true, multiple: true
