@@ -13,6 +13,11 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  */
+ /**
+ * 10/31/2018
+ * Updated required fields so the application can be used simply to humidify or dehumidify and not require both functions
+ * Corrected value used for humidification low value to turn on assigned switch
+ */
 definition(
     name: "Humidity Manager",
     namespace: "Mavrrick",
@@ -36,10 +41,10 @@ page(name: "page1", title: "Select sensors and set confortable humidity range", 
 	input ("humidityInput", "capability.relativeHumidityMeasurement", required: true)
 	}   
     section("Which switch controlls our humidifier?") {
-		input "switch2", "capability.switch"
+		input ("switch2", "capability.switch", required: false)
 	}
         section("Which switch controlls your dehumidifer or exhast fan?") {
-		input "switch1", "capability.switch"
+		input ("switch1", "capability.switch", required: false)
 	}
        section("Humidity offset modifier") {
         input ("humoffset1", "number", title: "Desired humidity setting offset.  By default the humidity at 40 degrees F outdoor temperature will be 45% the humidity at -20 degrees F outdoor temperature will be 15%.  This setting moves the range linearly by the number input here.", required: false)
@@ -174,14 +179,14 @@ def humidityActivate(evt) {
     log.debug("High Humidity range is ${humidityHigh2} to ${humidityHigh3} adjusted")
     }
     
-    	if (currentHumidity >= humidityLow2  && "on" == switch2.currentSwitch) {
+    	if (currentHumidity >= humidityLow3  && "on" == switch2.currentSwitch) {
                 switch2.off()
-                log.debug("Humidity is currently ${currentHumidity} and has risen above the current high humidity setpoint of ${humidityLow2}, the humidifier is off.")
+                log.debug("Humidity is currently ${currentHumidity} and has risen above the current high humidity setpoint of ${humidityLow3}, the humidifier is off.")
             	}
             
-    	if (currentHumidity <= humidityLow3 && "off" == switch2.currentSwitch) {
+    	if (currentHumidity <= humidityLow2 && "off" == switch2.currentSwitch) {
     			switch2.on()
-                log.debug("Humidity is currently ${currentHumidity} and has dropped below the current low humidity setpoint of ${humidityLow3}, the humidifier is on.")
+                log.debug("Humidity is currently ${currentHumidity} and has dropped below the current low humidity setpoint of ${humidityLow2}, the humidifier is on.")
             	 	 }
         if (currentHumidity >= humidityHigh3 && "off" == switch1.currentSwitch) {
     			switch1.on()
