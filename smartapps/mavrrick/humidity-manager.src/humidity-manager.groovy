@@ -178,24 +178,27 @@ def humidityActivate(evt) {
     humidityHigh3 = (humMax+settings.humrange).toDouble()
     log.debug("High Humidity range is ${humidityHigh2} to ${humidityHigh3} adjusted")
     }
-    
-    	if (currentHumidity >= humidityLow3  && "on" == switch2.currentSwitch) {
+    	if (switch2) {
+    		if (currentHumidity >= humidityLow3  && "on" == switch2.currentSwitch) {
                 switch2.off()
                 log.debug("Humidity is currently ${currentHumidity} and has risen above the current high humidity setpoint of ${humidityLow3}, the humidifier is off.")
             	}
             
-    	if (currentHumidity <= humidityLow2 && "off" == switch2.currentSwitch) {
+    		if (currentHumidity <= humidityLow2 && "off" == switch2.currentSwitch) {
     			switch2.on()
                 log.debug("Humidity is currently ${currentHumidity} and has dropped below the current low humidity setpoint of ${humidityLow2}, the humidifier is on.")
             	 	 }
-        if (currentHumidity >= humidityHigh3 && "off" == switch1.currentSwitch) {
+                }
+        if (switch1) {
+        	if (currentHumidity >= humidityHigh3 && "off" == switch1.currentSwitch) {
     			switch1.on()
                 log.debug("Humidity is currently ${currentHumidity} and has risen above the current high humidity setpoint of ${humidityHigh3}, the fan/dehumidifier is on.")
             	 	 }
-        if (currentHumidity <= humidityHigh2 && "on" == switch1.currentSwitch) {
+        	if (currentHumidity <= humidityHigh2 && "on" == switch1.currentSwitch) {
     			switch1.off()
                 log.debug("Humidity is currently ${currentHumidity} and has dropped below the current high humidity setpoint of ${humidityHigh2}, the fan/dehumidifier is Off.")
             	 	 }
+                    }
         if (currentHumidity > humidityLow2 && currentHumidity < humidityHigh2) {
         log.debug("Humidity is withing prefered comfortable range. Nothing to do.")
         }
