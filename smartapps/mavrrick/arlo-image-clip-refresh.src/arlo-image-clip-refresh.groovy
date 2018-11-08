@@ -30,7 +30,7 @@ preferences {
 	section("Setup") {
 		input "cameras", "capability.videoCapture", multiple: true
         input name: "clipLength", type: "number", title: "Clip Length", description: "Please enter the length of each recording", required: true, range: "5..120"
-        input name: "frequency", type: "number", title: "Frequency to refresh cameras in min", description: "Please specify how often you would like to refresh cameras", required: true
+        input name: "frequency", type: "number", title: "Frequency to refresh cameras in hours", description: "Please specify how often you would like to refresh cameras", required: true
         }
 }
 
