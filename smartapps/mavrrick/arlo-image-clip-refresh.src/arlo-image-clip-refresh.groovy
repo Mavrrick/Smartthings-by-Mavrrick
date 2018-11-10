@@ -30,7 +30,8 @@ preferences {
 	section("Setup") {
 		input "cameras", "capability.videoCapture", multiple: true
         input name: "clipLength", type: "number", title: "Clip Length", description: "Please enter the length of each recording", required: true, range: "5..120"
-        input name: "frequency", type: "number", title: "Frequency to refresh cameras in hours", description: "Please specify how often you would like to refresh cameras", required: true
+        input "frequencyUnit", "enum", options: ["mins", "hours"], required: true, defaultValue: "hours", title: "Unit for frequency"
+        input name: "frequency", type: "number", title: "Frequency to refresh cameras", description: "Please specify how often you would like to refresh cameras", required: true
         }
 }
 
@@ -46,7 +47,13 @@ def updated() {
 }
 
 def initialize() {
-	schedule("0 0 0/${frequency} * * ?", arloRefresh)
+	if (frequencyUnit?.equals("hours")) {
+		schedule("0 0 0/${frequency} * * ?", arloRefresh)
+		}
+        else {
+	schedule("0 0/${frequency} 0 * * ?", arloRefresh)
+					}
+//	schedule("0 0 0/${frequency} * * ?", arloRefresh)
 }
 
 def arloRefresh() {	
