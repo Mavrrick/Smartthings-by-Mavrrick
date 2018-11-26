@@ -55,6 +55,9 @@ definition(
 preferences {
     // The parent app preferences are pretty simple: just use the app input for the child app.
     page(name: "mainPage", title: "Tools", install: true, uninstall: true,submitOnChange: true) {
+    	section ("New Version is out "){
+        paragraph "There is a new version of ADT Tools out. Version 1 is deprecated and all future updates will go to the new version. Please vist the release thread for more details."
+         }
         section ("ADT Integration Apps"){
             app(name: "adtNotifier", appName: "ADT Notifier", namespace: "Mavrrick", title: "Create custom notification when alarm changes state", multiple: true)
             app(name: "adtModeChange", appName: "ADT Mode Change", namespace: "Mavrrick", title: "Allows changing alarm mode from smartapps", multiple: true)            
