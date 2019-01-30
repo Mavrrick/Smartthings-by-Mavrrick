@@ -38,7 +38,7 @@ preferences {
 	}
 	section("Setup") {
 		input "cameras", "capability.videoCapture", description: "Please select the cameras will when the triggered", multiple: true
-        input name: "clipLength", type: "number", title: "Clip Length", description: "Please enter the length of each recording", required: true, range: "5..120"
+        input name: "clipLength", type: "number", title: "Clip Length", description: "Please enter the length of each recording", required: true, range: "5..300"
         }
 }
 
