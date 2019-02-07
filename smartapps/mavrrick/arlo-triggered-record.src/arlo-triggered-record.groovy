@@ -19,9 +19,9 @@ definition(
     author: "Mavrrick",
     description: "Trigger a recording based on device action.",
     category: "My Apps",
-	iconUrl: "https://storage.googleapis.com/arlopilot/arlo-small.png",
-	iconX2Url: "https://storage.googleapis.com/arlopilot/arlo-med.png",
-	iconX3Url: "https://storage.googleapis.com/arlopilot/arlo-large.png"
+	iconUrl: "https://farm9.staticflickr.com/8632/16461422990_e5121d68ee_o.jpg",
+	iconX2Url: "https://farm9.staticflickr.com/8632/16461422990_e5121d68ee_o.jpg",
+	iconX3Url: "https://farm9.staticflickr.com/8632/16461422990_e5121d68ee_o.jpg"
     )
 
 import groovy.time.TimeCategory 
